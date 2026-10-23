@@ -48,7 +48,7 @@ These privacy-safe illustrations show the interaction model of this source snaps
 
 ## Principles
 
-- Browsing works without an account, hosted service, PIOS Core, or PIOS.
+- Browsing works without an account or hosted service: it does not require [Core by Prifina](https://core.prifina.com/), [PIOS Core](https://github.com/peecos/pios), or another [PIOS](https://github.com/peecos/pios)-compatible system.
 - Website sessions use separate WebKit stores; Incognito uses nonpersistent storage and is excluded from normal history and restoration.
 - Saved items, Reader captures, downloads, and Insights are local unless the user explicitly exports or shares them.
 - [Apple managed capabilities](https://developer.apple.com/help/account/reference/supported-capabilities-ios) are absent in the default source build.
@@ -72,7 +72,7 @@ For device signing and test steps, see [build and signing](docs/BUILD_AND_SIGNIN
 - **[Liberty. Equality. Data.](https://libertyequalitydata.org/)**—sometimes shortened to **LED**—is the open builder ecosystem publishing this source edition. Its [GitHub organization](https://github.com/libertyequalitydata) hosts Personal Browser and other open work around individual control and data sovereignty.
 - **[Prifina](https://www.prifina.com/)** develops the continuously maintained commercial Browser app. The commercial app is useful for end-user testing; this repository remains a separately maintained source snapshot.
 - **[PIOS](https://github.com/peecos/pios)** means Personal Intelligence Operating System: an open framework for owner-controlled personal information and intelligence systems. It is future compatibility context only; this snapshot has no live PIOS connection.
-- **[PIOS Core](https://github.com/peecos/pios)** means the owner-controlled coordination and information layer described by PIOS. “Core” in these documents does not mean an Apple framework or a hosted service included here. Personal Browser does not connect to PIOS Core in this snapshot.
+- **[PIOS Core](https://github.com/peecos/pios)** means the owner-controlled coordination and information layer described by PIOS. **[Core by Prifina](https://core.prifina.com/)** is Prifina's hosted Core service for keeping personal context, preferences, information, and AI learning available across authorized apps and AI. Neither is required or connected in this snapshot.
 - **[SwiftUI](https://developer.apple.com/xcode/swiftui/)** is Apple's user-interface framework. **[WebKit](https://developer.apple.com/documentation/webkit)** is Apple's web-content engine and provides `WKWebView`, which renders webpages in the app.
 - **[Xcode](https://developer.apple.com/xcode/)** is Apple's development environment. **[XcodeGen](https://github.com/yonaskolb/XcodeGen)** creates the generated Xcode project from the repository's reviewed `project.yml` specification.
 - **[TestFlight](https://developer.apple.com/testflight/)** is Apple's beta-distribution service. The linked TestFlight build belongs to the commercial app, not to this source repository.
