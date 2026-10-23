@@ -1,6 +1,6 @@
 # Changelog
 
-## 2026-10.1 — staged source snapshot
+## 2026-10.1 — initial public source snapshot
 
 - Selected the verified commercial build-78 source as bounded input.
 - Separated bundle, storage, signing defaults, branding, and public documentation.
@@ -14,4 +14,4 @@
 - Hid the underlying browser interaction and accessibility tree while full-screen surfaces are presented.
 - Passed the 217-test physical iPhone suite on 2026-10-23.
 
-The source snapshot is stored in a private repository. Public visibility, a release tag, binaries, and app distribution have not been created.
+This release publishes source code under the MIT License. It does not include a signed binary, store distribution record, separate beta build, hosted service, support SLA, or managed Apple entitlement.

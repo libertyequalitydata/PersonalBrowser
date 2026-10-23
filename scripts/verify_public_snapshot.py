@@ -3,6 +3,7 @@
 import json
 import plistlib
 import re
+import subprocess
 import sys
 from pathlib import Path
 
@@ -18,9 +19,13 @@ ALLOWED_HISTORY = {
         "- **[TestFlight](https://developer.apple.com/testflight/)** is Apple's beta-distribution service. The linked TestFlight build belongs to the commercial app, not to this source repository.",
         "The source is provided without warranty, hosted service, support SLA, or release cadence. Derivatives must not imply endorsement by Prifina, Liberty. Equality. Data., Apple, or supported websites. Product names and commercial identity are not licensed by the MIT source grant.",
     ],
+    "SECURITY.md": ["For the public repository, use GitHub's **Report a vulnerability** action under the Security tab. It creates a private security advisory visible only to the reporter and repository maintainers. Do not post exploit details in a public issue. If GitHub private reporting is temporarily unavailable, email `hello@prifina.com` with the subject `Personal Browser security report` and include the minimum information needed to establish a private follow-up. No response-time or support SLA is promised. Do not include unrelated credentials, browsing data, or personal details in reports. This source snapshot has no hosted backend or managed Apple entitlement."],
+    "CODE_OF_CONDUCT.md": ["Harassment, discrimination, threats, or disclosure of private information are not accepted. Maintainers may remove contributions or participation that violate these rules. Send private conduct reports to `hello@prifina.com` with the subject `Personal Browser conduct report`. Include only information relevant to the report and state whether the reporter's identity may be shared during review. Do not disclose conduct reports in public issues. This document creates no guaranteed moderation or response SLA."],
+    "PUBLICATION_READINESS.md": ["- Owner authorization: MIT licensing, Prifina and Liberty. Equality. Data. attribution, and public repository publication explicitly approved."],
+    ".github/ISSUE_TEMPLATE/config.yml": ["    url: https://browser.prifina.com/"],
     "SNAPSHOT.json": ['  "source_selected": "Browser by Prifina 0.1.0 (78)",'],
     "SOURCE_PROVENANCE.md": ["This local source snapshot was selected from Browser by Prifina version `0.1.0 (78)` on 2026-10-23. The source input was limited to app sources, tests, resources, supporting files, and project specification. The commercial Xcode project, signing/export records, website configuration, app data, and distribution history were excluded. No commercial Git history was available or reconstructed. Personal Browser starts from a clean source package. The previous commercial physical-device result establishes only why this input was chosen; it is not Personal Browser test evidence. The source and new artwork are offered under the repository MIT notice; commercial names and marks are not licensed as product identity."],
-    "SANITIZATION_REPORT.md": ["The words **Prifina** and **Browser by Prifina** are intentionally retained only in `LICENSE`, `README.md`, `SNAPSHOT.json`, `SOURCE_PROVENANCE.md`, and `SANITIZATION_REPORT.md` for copyright, provenance, learning/testing references, or non-endorsement. No unclassified commercial domain, team ID, profile, support email, device ID, or storage namespace is allowed. Run `python3 scripts/verify_public_snapshot.py` to reproduce the source checks. The scan passed on 2026-10-23 with ten exact historical or reference lines classified."],
+    "SANITIZATION_REPORT.md": ["The words **Prifina** and **Browser by Prifina** are retained only in classified lines for copyright, provenance, learning/testing references, public reporting contacts, or non-endorsement. No unclassified commercial domain, team ID, profile, support email, device ID, or storage namespace is allowed. Run `python3 scripts/verify_public_snapshot.py` to reproduce the source and Git-history checks."],
 }
 TEXT_SUFFIXES = {".swift", ".md", ".json", ".yml", ".yaml", ".plist", ".xcprivacy", ".svg", ".sh", ".py", ".txt"}
 EXCLUDED_DIRS = {".git", "__pycache__", "PersonalBrowser.xcodeproj"}
@@ -99,7 +104,7 @@ api_types = privacy.get("NSPrivacyAccessedAPITypes", [])
 if api_types != [{"NSPrivacyAccessedAPIType": "NSPrivacyAccessedAPICategoryUserDefaults", "NSPrivacyAccessedAPITypeReasons": ["CA92.1"]}]:
     fail("Browser/Resources/PrivacyInfo.xcprivacy", 0, "unexpected accessed API declaration")
 
-required = ["LICENSE", "README.md", "SNAPSHOT_MODEL.md", "SNAPSHOT.json", "PRIVACY.md", "SECURITY.md", "CONTRIBUTING.md", "CODE_OF_CONDUCT.md", "THIRD_PARTY_NOTICES.md", "CHANGELOG.md", "AGENTS.md", ".gitignore", "SOURCE_PROVENANCE.md", "SANITIZATION_REPORT.md", "PUBLICATION_READINESS.md", "docs/BUILD_AND_SIGNING.md", "docs/DEFAULT_BROWSER_ENTITLEMENT.md", "docs/ARCHITECTURE.md", "docs/FEATURES_AND_LIMITATIONS.md", "docs/MAINTAINER_GUIDE.md", "docs/AGENT_START_PROMPT.md", "docs/images/new-tab.svg", "docs/images/tabs.svg", "docs/images/library.svg", ".github/ISSUE_TEMPLATE/bug_report.md", ".github/ISSUE_TEMPLATE/feature_request.md", ".github/PULL_REQUEST_TEMPLATE.md"]
+required = ["LICENSE", "README.md", "SNAPSHOT_MODEL.md", "SNAPSHOT.json", "PRIVACY.md", "SECURITY.md", "CONTRIBUTING.md", "CODE_OF_CONDUCT.md", "THIRD_PARTY_NOTICES.md", "CHANGELOG.md", "AGENTS.md", ".gitignore", "SOURCE_PROVENANCE.md", "SANITIZATION_REPORT.md", "PUBLICATION_READINESS.md", "docs/BUILD_AND_SIGNING.md", "docs/DEFAULT_BROWSER_ENTITLEMENT.md", "docs/ARCHITECTURE.md", "docs/FEATURES_AND_LIMITATIONS.md", "docs/MAINTAINER_GUIDE.md", "docs/AGENT_START_PROMPT.md", "docs/RELEASE_NOTES_2026-10.1.md", "docs/images/new-tab.svg", "docs/images/tabs.svg", "docs/images/library.svg", ".github/ISSUE_TEMPLATE/bug_report.md", ".github/ISSUE_TEMPLATE/feature_request.md", ".github/ISSUE_TEMPLATE/config.yml", ".github/PULL_REQUEST_TEMPLATE.md", ".github/workflows/public-boundary.yml"]
 for relative in required:
     if not (ROOT / relative).is_file():
         fail(relative, 0, "required public package file missing")
@@ -107,6 +112,30 @@ try:
     json.loads((ROOT / "SNAPSHOT.json").read_text())
 except (ValueError, OSError) as error:
     fail("SNAPSHOT.json", 0, str(error))
+
+git_dir = ROOT / ".git"
+if git_dir.exists():
+    try:
+        commits = subprocess.check_output(["git", "rev-list", "--all"], cwd=ROOT, text=True).splitlines()
+        history_pattern = r"-----BEGIN (RSA |EC |OPENSSH )?PRIVATE KEY-----|github_pat_|ghp_[A-Za-z0-9]{20,}|sk-[A-Za-z0-9]{12,}|3F966NFD22|Makkaraperunat|/Users/[^/[:space:]]+|[0-9a-fA-F]{8}-[0-9a-fA-F]{16}"
+        artifact_pattern = re.compile(r"\.(p8|p12|pem|key|mobileprovision|cer|ipa|xcarchive|xcresult|env|zip)$|(^|/)\.env($|\.)|(^|/)DerivedData/|(^|/)build/", re.I)
+        for commit in commits:
+            paths = subprocess.check_output(["git", "ls-tree", "-r", "--name-only", commit], cwd=ROOT, text=True).splitlines()
+            for relative in paths:
+                if artifact_pattern.search(relative):
+                    fail(relative, 0, f"disallowed artifact exists in Git history at {commit[:12]}")
+            result = subprocess.run(
+                ["git", "grep", "-I", "-n", "-E", "-e", history_pattern, commit, "--", ".", ":(exclude)scripts/verify_public_snapshot.py"],
+                cwd=ROOT,
+                text=True,
+                capture_output=True,
+            )
+            if result.returncode not in (0, 1):
+                fail(".git", 0, f"Git-history content scan failed at {commit[:12]}: {result.stderr.strip()}")
+            elif result.stdout.strip():
+                fail(".git", 0, f"sensitive content exists in Git history at {commit[:12]}: {result.stdout.strip()}")
+    except (OSError, subprocess.CalledProcessError) as error:
+        fail(".git", 0, f"Git-history scan failed: {error}")
 
 print(f"Scanned source package; {len(historical)} classified historical name uses; {len(issues)} issues")
 for item in historical:

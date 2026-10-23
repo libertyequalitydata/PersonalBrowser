@@ -1,13 +1,13 @@
 {
   "snapshot": "2026-10.1",
-  "branch": "snapshot/2026-10",
+  "branch": "main",
   "tag": "personal-browser-2026-10.1",
   "source_selected": "Browser by Prifina 0.1.0 (78)",
-  "publication_date": null,
+  "publication_date": "2026-10-23",
   "minimum_ios": "17.0",
   "capabilities": ["tabs", "isolated_website_sessions", "incognito", "roles", "bookmarks", "history", "reader", "library", "downloads", "local_insights"],
   "entitlements": {"default_browser": "absent", "passkey_browser_authorization": "disabled"},
   "storage_schema": "PersonalBrowser/browser-state.json; separate app sandbox and bundle ID; no commercial-store migration",
-  "test_evidence": "XcodeGen generation, unsigned generic-iPhone build-for-testing, static public-boundary/privacy checks, and the 217-test physical iPhone suite passed on 2026-10-23; owner-visible device checks remain pending",
+  "test_evidence": "XcodeGen generation, unsigned generic-iPhone build-for-testing, static public-boundary/privacy checks, full Git-history leak checks, and the 217-test physical iPhone suite passed before publication; final owner-visible release-candidate checks are recorded in PUBLICATION_READINESS.md",
   "compatibility": "No compatibility or migration continuity promised with other snapshots or the commercial app"
 }
