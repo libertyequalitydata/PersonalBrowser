@@ -14,4 +14,4 @@
 - Hid the underlying browser interaction and accessibility tree while full-screen surfaces are presented.
 - Passed the 217-test physical iPhone suite on 2026-10-23.
 
-Publication date and owner-visible device validation remain pending.
+The source snapshot is stored in a private repository. Public visibility, a release tag, binaries, and app distribution have not been created.

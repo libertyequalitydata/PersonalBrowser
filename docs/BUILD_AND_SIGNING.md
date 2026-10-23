@@ -8,7 +8,7 @@
 
 ## Unsigned build
 
-Install Xcode 26.3 and XcodeGen, then run:
+Install Xcode 26.3 or later and XcodeGen, then run. Snapshot `2026-10.1` was verified with Xcode 26.6:
 
 ```sh
 xcodegen generate

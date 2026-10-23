@@ -1,0 +1,46 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="390" height="844" viewBox="0 0 390 844" role="img" aria-labelledby="title desc">
+  <title id="title">Illustrative Personal Browser tabs</title>
+  <desc id="desc">A light tabs overview with equal cards, pinned destinations, role labels, and bottom navigation.</desc>
+  <defs>
+    <linearGradient id="fade" x1="0" y1="0" x2="0" y2="1"><stop stop-color="#f8fbfa" stop-opacity="0"/><stop offset=".32" stop-color="#f2f8f7" stop-opacity=".94"/><stop offset="1" stop-color="#eef5f4"/></linearGradient>
+    <filter id="shadow" x="-20%" y="-20%" width="140%" height="160%"><feDropShadow dx="0" dy="8" stdDeviation="12" flood-color="#17343a" flood-opacity=".09"/></filter>
+  </defs>
+  <rect width="390" height="844" rx="42" fill="#f7fbfa"/>
+  <text x="28" y="43" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="15" font-weight="700" fill="#10262c">9:41</text>
+  <text x="195" y="104" text-anchor="middle" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="26" font-weight="800" fill="#10262c">Tabs</text>
+  <path d="M45 94l14-14M45 94l14 14" fill="none" stroke="#10262c" stroke-width="4" stroke-linecap="round"/>
+  <path d="M330 92h20M340 82v20" fill="none" stroke="#00a88f" stroke-width="4" stroke-linecap="round"/>
+  <g filter="url(#shadow)">
+    <rect x="24" y="142" width="164" height="248" rx="25" fill="#fff" stroke="#00a88f" stroke-width="2"/>
+    <rect x="202" y="142" width="164" height="248" rx="25" fill="#fff" stroke="#dfe8e6"/>
+  </g>
+  <g>
+    <rect x="39" y="157" width="134" height="94" rx="16" fill="#dff4f0"/>
+    <circle cx="106" cy="204" r="25" fill="#087f73"/><path d="M94 204h24M106 192v24" stroke="#fff" stroke-width="4" stroke-linecap="round"/>
+    <circle cx="178" cy="151" r="18" fill="#f1f5f4" stroke="#d9e2e0"/><path d="M172 145l12 12M184 145l-12 12" stroke="#627074" stroke-width="3" stroke-linecap="round"/>
+    <text x="42" y="286" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="11" font-weight="800" fill="#008b7b">READER</text>
+    <text x="42" y="315" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="21" font-weight="800" fill="#10262c">Designing a</text><text x="42" y="340" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="21" font-weight="800" fill="#10262c">personal web</text>
+    <rect x="42" y="356" width="67" height="22" rx="11" fill="#e6edec"/><text x="75" y="371" text-anchor="middle" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="11" font-weight="700" fill="#526164">Research</text>
+  </g>
+  <g>
+    <rect x="217" y="157" width="134" height="94" rx="16" fill="#eef0f8"/>
+    <circle cx="284" cy="204" r="25" fill="#23345e"/><path d="M272 204h24M284 192v24" stroke="#fff" stroke-width="4" stroke-linecap="round"/>
+    <circle cx="356" cy="151" r="18" fill="#f1f5f4" stroke="#d9e2e0"/><path d="M350 145l12 12M362 145l-12 12" stroke="#627074" stroke-width="3" stroke-linecap="round"/>
+    <text x="220" y="286" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="11" font-weight="800" fill="#59647c">WEB APP</text>
+    <text x="220" y="315" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="21" font-weight="800" fill="#10262c">Projects and</text><text x="220" y="340" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="21" font-weight="800" fill="#10262c">working notes</text>
+    <rect x="220" y="356" width="55" height="22" rx="11" fill="#e6edec"/><text x="248" y="371" text-anchor="middle" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="11" font-weight="700" fill="#526164">Work</text>
+  </g>
+  <rect y="510" width="390" height="334" fill="url(#fade)"/>
+  <text x="195" y="588" text-anchor="middle" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="12" font-weight="800" fill="#748185">PINNED</text>
+  <g transform="translate(86 610)">
+    <rect width="58" height="58" rx="16" fill="#fff" stroke="#dce6e4"/><circle cx="29" cy="29" r="20" fill="#087f73"/><text x="29" y="36" text-anchor="middle" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="22" font-weight="800" fill="#fff">N</text>
+    <rect x="80" width="58" height="58" rx="16" fill="#fff" stroke="#dce6e4"/><circle cx="109" cy="29" r="20" fill="#23345e"/><text x="109" y="36" text-anchor="middle" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="22" font-weight="800" fill="#fff">P</text>
+    <rect x="160" width="58" height="58" rx="16" fill="#fff" stroke="#dce6e4"/><circle cx="189" cy="29" r="20" fill="#e7a937"/><text x="189" y="36" text-anchor="middle" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="22" font-weight="800" fill="#fff">R</text>
+  </g>
+  <g font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="12" font-weight="700">
+    <rect x="92" y="696" width="68" height="28" rx="14" fill="#244049"/><text x="126" y="714" text-anchor="middle" fill="#fff">Research</text>
+    <rect x="168" y="696" width="54" height="28" rx="14" fill="#dfe7e5"/><text x="195" y="714" text-anchor="middle" fill="#647174">Work</text>
+    <rect x="230" y="696" width="67" height="28" rx="14" fill="#dfe7e5"/><text x="264" y="714" text-anchor="middle" fill="#647174">Learning</text>
+  </g>
+  <g transform="translate(24 750)" filter="url(#shadow)"><rect width="342" height="70" rx="27" fill="#fff" stroke="#d9e4e2"/><g fill="none" stroke="#687579" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M31 27h23v18H31zM38 21h23v18" stroke="#00a88f"/><path d="M105 23v25l9-6 9 6V23z"/><circle cx="190" cy="35" r="12"/><path d="M190 27v9l6 3"/><path d="M258 25h18v20h-18zM262 21h18v20"/><path d="M323 26v18M323 26l-6 6M323 26l6 6"/></g></g>
+</svg>

@@ -10,12 +10,13 @@ ROOT = Path(__file__).resolve().parents[1]
 ALLOWED_HISTORY = {
     "LICENSE": ["Copyright (c) 2026 Prifina Inc. and Liberty. Equality. Data. contributors"],
     "README.md": [
-        "Personal Browser is an independent, local-first iPhone browser source snapshot periodically derived from the commercial Browser by Prifina. It may not match the current commercial product. This October 2026 snapshot is a separate application with its own bundle identifier, storage, simple artwork, and unsigned build defaults.",
+        "Personal Browser is an independent, local-first iPhone browser source snapshot periodically derived from the commercial Browser by Prifina. It may not match the current commercial product. Snapshot `2026-10.1` is a separate application with its own bundle identifier, storage, artwork, and unsigned build defaults.",
+        "- **Try the maintained end-user app:** [Browser product site](https://browser.prifina.com/) · [Join the Browser beta in TestFlight](https://testflight.apple.com/join/VZZPdDXA)",
         "The source is provided without warranty, hosted service, support SLA, or release cadence. Derivatives must not imply endorsement by Prifina, Liberty. Equality. Data., Apple, or supported websites. Product names and commercial identity are not licensed by the MIT source grant.",
     ],
     "SNAPSHOT.json": ['  "source_selected": "Browser by Prifina 0.1.0 (78)",'],
     "SOURCE_PROVENANCE.md": ["This local source snapshot was selected from Browser by Prifina version `0.1.0 (78)` on 2026-10-23. The source input was limited to app sources, tests, resources, supporting files, and project specification. The commercial Xcode project, signing/export records, website configuration, app data, and distribution history were excluded. No commercial Git history was available or reconstructed. Personal Browser starts from a clean source package. The previous commercial physical-device result establishes only why this input was chosen; it is not Personal Browser test evidence. The source and new artwork are offered under the repository MIT notice; commercial names and marks are not licensed as product identity."],
-    "SANITIZATION_REPORT.md": ["The words **Prifina** and **Browser by Prifina** are intentionally retained only in `LICENSE`, `README.md`, `SNAPSHOT.json`, `SOURCE_PROVENANCE.md`, and `SANITIZATION_REPORT.md` for copyright, provenance, or non-endorsement. No commercial domain, team ID, profile, support email, device ID, or storage namespace is allowed. Run `python3 scripts/verify_public_snapshot.py` to reproduce the source checks. The scan passed on 2026-10-23 with six exact historical lines classified."],
+    "SANITIZATION_REPORT.md": ["The words **Prifina** and **Browser by Prifina** are intentionally retained only in `LICENSE`, `README.md`, `SNAPSHOT.json`, `SOURCE_PROVENANCE.md`, and `SANITIZATION_REPORT.md` for copyright, provenance, testing reference, or non-endorsement. No unclassified commercial domain, team ID, profile, support email, device ID, or storage namespace is allowed. Run `python3 scripts/verify_public_snapshot.py` to reproduce the source checks. The scan passed on 2026-10-23 with seven exact historical or testing-reference lines classified."],
 }
 TEXT_SUFFIXES = {".swift", ".md", ".json", ".yml", ".yaml", ".plist", ".xcprivacy", ".svg", ".sh", ".py", ".txt"}
 EXCLUDED_DIRS = {".git", "__pycache__", "PersonalBrowser.xcodeproj"}
@@ -31,7 +32,7 @@ patterns = {
     "owner path": re.compile(r"/Users/[^/\s]+/"),
     "credential material": re.compile(r"-----BEGIN (?:RSA |EC |OPENSSH )?PRIVATE KEY-----|\b(?:ghp_|github_pat_|sk-[A-Za-z0-9]{12})|\b(?:api[_-]?key|access[_-]?token|secret[_-]?key|password)\s*[:=]\s*['\"][^'\"]+['\"]", re.I),
     "device UDID": re.compile(r"\b[0-9a-fA-F]{40}\b|\b[0-9a-fA-F]{8}-[0-9a-fA-F]{16}\b"),
-    "commercial release ID": re.compile(r"3F966NFD22|20261022|Makkaraperunat|App Store Connect|TestFlight|provisioning.profile|\.p8\b", re.I),
+    "commercial release ID": re.compile(r"3F966NFD22|20261022|Makkaraperunat|App Store Connect|TestFlight|provisioning\.profile|\.p8\b", re.I),
 }
 
 for path in sorted(ROOT.rglob("*")):
@@ -54,13 +55,16 @@ for path in sorted(ROOT.rglob("*")):
         fail(relative, 0, "unexpected non-text source")
         continue
     for number, line in enumerate(content.splitlines(), 1):
+        classified_reference = line in ALLOWED_HISTORY.get(relative, [])
         for label, pattern in patterns.items():
             if pattern.search(line):
                 if label == "commercial release ID" and relative == ".gitignore" and line == "*.p8":
                     continue
+                if classified_reference and label in {"commercial identity or storage", "commercial release ID"}:
+                    continue
                 fail(relative, number, label)
         if re.search(r"Prifina", line, re.I):
-            if line in ALLOWED_HISTORY.get(relative, []):
+            if classified_reference:
                 historical.append(f"{relative}:{number}")
             else:
                 fail(relative, number, "unclassified commercial name")
@@ -91,7 +95,7 @@ api_types = privacy.get("NSPrivacyAccessedAPITypes", [])
 if api_types != [{"NSPrivacyAccessedAPIType": "NSPrivacyAccessedAPICategoryUserDefaults", "NSPrivacyAccessedAPITypeReasons": ["CA92.1"]}]:
     fail("Browser/Resources/PrivacyInfo.xcprivacy", 0, "unexpected accessed API declaration")
 
-required = ["LICENSE", "README.md", "SNAPSHOT_MODEL.md", "SNAPSHOT.json", "PRIVACY.md", "SECURITY.md", "CONTRIBUTING.md", "CODE_OF_CONDUCT.md", "THIRD_PARTY_NOTICES.md", "CHANGELOG.md", "AGENTS.md", ".gitignore", "SOURCE_PROVENANCE.md", "SANITIZATION_REPORT.md", "PUBLICATION_READINESS.md", "docs/BUILD_AND_SIGNING.md", "docs/DEFAULT_BROWSER_ENTITLEMENT.md", "docs/ARCHITECTURE.md", ".github/ISSUE_TEMPLATE/bug_report.md", ".github/ISSUE_TEMPLATE/feature_request.md", ".github/PULL_REQUEST_TEMPLATE.md"]
+required = ["LICENSE", "README.md", "SNAPSHOT_MODEL.md", "SNAPSHOT.json", "PRIVACY.md", "SECURITY.md", "CONTRIBUTING.md", "CODE_OF_CONDUCT.md", "THIRD_PARTY_NOTICES.md", "CHANGELOG.md", "AGENTS.md", ".gitignore", "SOURCE_PROVENANCE.md", "SANITIZATION_REPORT.md", "PUBLICATION_READINESS.md", "docs/BUILD_AND_SIGNING.md", "docs/DEFAULT_BROWSER_ENTITLEMENT.md", "docs/ARCHITECTURE.md", "docs/FEATURES_AND_LIMITATIONS.md", "docs/MAINTAINER_GUIDE.md", "docs/AGENT_START_PROMPT.md", "docs/images/new-tab.svg", "docs/images/tabs.svg", "docs/images/library.svg", ".github/ISSUE_TEMPLATE/bug_report.md", ".github/ISSUE_TEMPLATE/feature_request.md", ".github/PULL_REQUEST_TEMPLATE.md"]
 for relative in required:
     if not (ROOT / relative).is_file():
         fail(relative, 0, "required public package file missing")

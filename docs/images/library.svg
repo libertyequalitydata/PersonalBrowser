@@ -1,0 +1,39 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="390" height="844" viewBox="0 0 390 844" role="img" aria-labelledby="title desc">
+  <title id="title">Illustrative Personal Browser Library</title>
+  <desc id="desc">A light Library screen with saved reading and media items.</desc>
+  <defs><filter id="shadow" x="-20%" y="-20%" width="140%" height="160%"><feDropShadow dx="0" dy="9" stdDeviation="13" flood-color="#17343a" flood-opacity=".08"/></filter></defs>
+  <rect width="390" height="844" rx="42" fill="#fbfaf4"/>
+  <text x="28" y="43" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="15" font-weight="700" fill="#10262c">9:41</text>
+  <path d="M45 94l14-14M45 94l14 14" fill="none" stroke="#10262c" stroke-width="4" stroke-linecap="round"/>
+  <text x="195" y="104" text-anchor="middle" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="26" font-weight="800" fill="#10262c">Library</text>
+  <g transform="translate(325 76)" fill="none" stroke="#10262c" stroke-width="3" stroke-linejoin="round"><path d="M0 6h24v24H0zM5 1h24v24"/><path d="M14 8v14M8 15h12"/></g>
+  <g transform="translate(26 136)" filter="url(#shadow)">
+    <rect width="338" height="178" rx="25" fill="#fff"/>
+    <rect x="18" y="18" width="112" height="142" rx="18" fill="#dcefeb"/>
+    <path d="M37 124c25-50 47-54 75-92v110H37z" fill="#087f73" opacity=".9"/><circle cx="95" cy="51" r="15" fill="#79ded0"/>
+    <text x="150" y="45" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="11" font-weight="800" fill="#008b7b">ARTICLE</text>
+    <text x="150" y="74" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="20" font-weight="800" fill="#10262c">A calmer way to</text><text x="150" y="98" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="20" font-weight="800" fill="#10262c">read the web</text>
+    <text x="150" y="125" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="13" fill="#6d797d">Main content, image, and</text><text x="150" y="144" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="13" fill="#6d797d">source retained locally.</text>
+    <circle cx="310" cy="147" r="13" fill="#e6f5f2"/><path d="M305 147l4 4 7-9" fill="none" stroke="#008b7b" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+  </g>
+  <g transform="translate(26 330)" filter="url(#shadow)">
+    <rect width="338" height="142" rx="25" fill="#fff"/>
+    <rect x="18" y="18" width="92" height="106" rx="18" fill="#e9eef8"/>
+    <circle cx="64" cy="71" r="27" fill="#23345e"/><path d="M57 59l20 12-20 12z" fill="#fff"/>
+    <text x="130" y="44" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="11" font-weight="800" fill="#59647c">VIDEO</text>
+    <text x="130" y="73" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="19" font-weight="800" fill="#10262c">Saved for later</text>
+    <text x="130" y="98" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="13" fill="#6d797d">12:48 · downloaded</text>
+    <rect x="130" y="110" width="84" height="22" rx="11" fill="#e8eeed"/><text x="172" y="125" text-anchor="middle" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="11" font-weight="700" fill="#58666a">1.5× playback</text>
+  </g>
+  <g transform="translate(26 488)" filter="url(#shadow)">
+    <rect width="338" height="142" rx="25" fill="#fff"/>
+    <rect x="18" y="18" width="92" height="106" rx="18" fill="#f5ead6"/>
+    <path d="M47 42h36l12 12v47H47z" fill="#fff" stroke="#c48b32" stroke-width="3"/><path d="M83 42v13h12" fill="none" stroke="#c48b32" stroke-width="3"/><text x="71" y="83" text-anchor="middle" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="15" font-weight="900" fill="#c48b32">PDF</text>
+    <text x="130" y="44" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="11" font-weight="800" fill="#9a6c28">DOCUMENT</text>
+    <text x="130" y="73" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="19" font-weight="800" fill="#10262c">Research brief</text>
+    <text x="130" y="98" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="13" fill="#6d797d">8 pages · available offline</text>
+    <text x="130" y="122" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="12" font-weight="700" fill="#008b7b">Open document</text>
+  </g>
+  <text x="195" y="694" text-anchor="middle" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="13" fill="#7a8588">Explicit saves. Local collection. Your choice.</text>
+  <g transform="translate(24 750)" filter="url(#shadow)"><rect width="342" height="70" rx="27" fill="#fff" stroke="#dedfd7"/><g fill="none" stroke="#697579" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M31 27h23v18H31zM38 21h23v18"/><path d="M105 23v25l9-6 9 6V23z"/><circle cx="190" cy="35" r="12"/><path d="M190 27v9l6 3"/><path d="M258 25h18v20h-18zM262 21h18v20" stroke="#00a88f"/><path d="M323 26v18M323 26l-6 6M323 26l6 6"/></g></g>
+</svg>
