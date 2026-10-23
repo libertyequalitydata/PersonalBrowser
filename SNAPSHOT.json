@@ -3,7 +3,7 @@
   "branch": "main",
   "tag": "personal-browser-2026-10.1",
   "source_selected": "Browser by Prifina 0.1.0 (78)",
-  "publication_date": "2026-10-24",
+  "publication_date": "2026-10-23",
   "minimum_ios": "17.0",
   "capabilities": ["tabs", "isolated_website_sessions", "incognito", "roles", "bookmarks", "history", "reader", "library", "downloads", "local_insights"],
   "entitlements": {"default_browser": "absent", "passkey_browser_authorization": "disabled"},
