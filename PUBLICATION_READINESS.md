@@ -12,7 +12,7 @@
 - XcodeGen generation: passed on 2026-10-23.
 - Unsigned generic iPhone build-for-testing: passed on 2026-10-23 using Xcode 26.6.
 - Source, privacy, credential, prohibited-key, and artifact scan: passed on 2026-10-23 with exact attribution, provenance, learning, and reporting references classified.
-- Full five-commit Git-history credential, owner-path, signing-artifact, and build-artifact scan: passed on 2026-10-23.
+- Full Git-history credential, owner-path, signing-artifact, and build-artifact scan: passed on 2026-10-23.
 - Independent code/security/privacy QA: GO for private local staging on 2026-10-23.
 - Independent documentation QA: GO for private local staging on 2026-10-23.
 - Automated physical-device tests on Primary Mac: passed 217/217 with zero failures and zero skips on 2026-10-23.
