@@ -1,6 +1,6 @@
 # Personal Browser
 
-Personal Browser is an independent, local-first iPhone browser source snapshot periodically derived from the commercial Browser by Prifina. It may not match the current commercial product. Snapshot `2026-10.1` is a separate application with its own bundle identifier, storage, artwork, and unsigned build defaults.
+Personal Browser is an independent, local-first iPhone browser source snapshot periodically derived from the commercial [Browser by Prifina](https://browser.prifina.com/). It may not match the current commercial product. Snapshot `2026-10.1` is a separate application with its own bundle identifier, storage, artwork, and unsigned build defaults.
 
 ## Choose the right edition
 
@@ -9,13 +9,30 @@ Personal Browser is an independent, local-first iPhone browser source snapshot p
 
 The commercial app is the best way to test the continuously maintained product experience. This repository is a periodic source snapshot for builders; feature parity, migrations, and release continuity are not promised.
 
+## Start a coding agent
+
+Give an agent this short prompt:
+
+```text
+Work on this Personal Browser repository. Read AGENTS.md and
+docs/AGENT_START_PROMPT.md before acting. Preserve the local-first privacy,
+Incognito, session-isolation, unsigned-build, and publication boundaries.
+Inspect git status, make a concrete plan for multi-file work, implement the
+smallest coherent change, run proportional tests plus the source boundary
+scanner, and report exactly what changed and what was not verified. Do not
+publish, distribute, activate managed Apple capabilities, or add hosted data
+flows without explicit maintainer authorization.
+```
+
+The repository-level rules are in [`AGENTS.md`](AGENTS.md). For a fuller copy-ready prompt, verification commands, and a future-snapshot prompt, use the [agent startup guide](docs/AGENT_START_PROMPT.md).
+
 ## What it includes
 
-- SwiftUI and WebKit browsing with tabs, pinned tabs, Subtabs, bookmarks, history, and downloads.
+- [SwiftUI](https://developer.apple.com/xcode/swiftui/) and [WebKit](https://developer.apple.com/documentation/webkit) browsing with tabs, pinned tabs, Subtabs, bookmarks, history, and downloads.
 - Separate persistent website sessions, optional owner-created Roles, and nonpersistent Incognito browsing.
 - Reader, Library, Reader PDF export, document/media viewing, and explicit transcription actions.
 - Local Browsing Insights and opt-in, reversible site settings.
-- No required account, hosted backend, Core, PIOS, or AI service.
+- No required account, hosted backend, PIOS Core, PIOS connection, or AI service. These ecosystem terms are explained below; none is active in this snapshot.
 
 See [features and limitations](docs/FEATURES_AND_LIMITATIONS.md) for the exact snapshot boundary.
 
@@ -31,15 +48,15 @@ These privacy-safe illustrations show the interaction model of this source snaps
 
 ## Principles
 
-- Browsing works without an account, hosted service, Core, or PIOS.
+- Browsing works without an account, hosted service, PIOS Core, or PIOS.
 - Website sessions use separate WebKit stores; Incognito uses nonpersistent storage and is excluded from normal history and restoration.
 - Saved items, Reader captures, downloads, and Insights are local unless the user explicitly exports or shares them.
-- Managed Apple capabilities are absent in the default source build.
+- [Apple managed capabilities](https://developer.apple.com/help/account/reference/supported-capabilities-ios) are absent in the default source build.
 - Personal information is not collected for the source publisher by default.
 
 ## Build
 
-Requires macOS with Xcode 26.3 or later and XcodeGen. Snapshot `2026-10.1` was verified with Xcode 26.6. The source target is iOS 17 or later.
+Requires macOS with [Xcode](https://developer.apple.com/xcode/) 26.3 or later and [XcodeGen](https://github.com/yonaskolb/XcodeGen), an open-source tool that generates an Xcode project from `project.yml`. Snapshot `2026-10.1` was verified with Xcode 26.6. The source target is iOS 17 or later.
 
 ```sh
 xcodegen generate
@@ -49,6 +66,17 @@ python3 scripts/verify_public_snapshot.py
 ```
 
 For device signing and test steps, see [build and signing](docs/BUILD_AND_SIGNING.md). The example source bundle ID is `org.libertyequalitydata.personalbrowser`; change it for your distribution. Apple managed entitlements, including Default Browser, do not transfer with source code.
+
+## Ecosystem and technology references
+
+- **[Liberty. Equality. Data.](https://libertyequalitydata.org/)**—sometimes shortened to **LED**—is the open builder ecosystem publishing this source edition. Its [GitHub organization](https://github.com/libertyequalitydata) hosts Personal Browser and other open work around individual control and data sovereignty.
+- **[Prifina](https://www.prifina.com/)** develops the continuously maintained commercial Browser app. The commercial app is useful for end-user testing; this repository remains a separately maintained source snapshot.
+- **[PIOS](https://github.com/peecos/pios)** means Personal Intelligence Operating System: an open framework for owner-controlled personal information and intelligence systems. It is future compatibility context only; this snapshot has no live PIOS connection.
+- **[PIOS Core](https://github.com/peecos/pios)** means the owner-controlled coordination and information layer described by PIOS. “Core” in these documents does not mean an Apple framework or a hosted service included here. Personal Browser does not connect to PIOS Core in this snapshot.
+- **[SwiftUI](https://developer.apple.com/xcode/swiftui/)** is Apple's user-interface framework. **[WebKit](https://developer.apple.com/documentation/webkit)** is Apple's web-content engine and provides `WKWebView`, which renders webpages in the app.
+- **[Xcode](https://developer.apple.com/xcode/)** is Apple's development environment. **[XcodeGen](https://github.com/yonaskolb/XcodeGen)** creates the generated Xcode project from the repository's reviewed `project.yml` specification.
+- **[TestFlight](https://developer.apple.com/testflight/)** is Apple's beta-distribution service. The linked TestFlight build belongs to the commercial app, not to this source repository.
+- **[MIT License](https://opensource.org/license/mit)** is the permissive open-source license used here. The repository's controlling license text is the local [LICENSE](LICENSE) file.
 
 ## Documentation
 
