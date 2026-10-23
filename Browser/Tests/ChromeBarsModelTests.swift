@@ -76,6 +76,13 @@ final class ChromeBarsModelTests: XCTestCase {
         XCTAssertTrue(BrowserAboutPresentation.snapshotSummary.contains("periodic"))
         XCTAssertTrue(BrowserAboutPresentation.snapshotSummary.contains("independently"))
         XCTAssertTrue(BrowserAboutPresentation.privacySummary.contains("app's own sandbox"))
+        XCTAssertEqual(BrowserAboutPresentation.commercialProductName, "Browser by Prifina")
+        XCTAssertEqual(BrowserAboutPresentation.commercialWebsiteURL.host, "browser.prifina.com")
+        XCTAssertTrue(BrowserAboutPresentation.commercialSummary.contains("maintained"))
+        XCTAssertTrue(BrowserCapabilityPresentation.sourceBuildSummary.contains("Apple-managed"))
+        XCTAssertTrue(BrowserCapabilityPresentation.defaultBrowserSummary.contains("Not included"))
+        XCTAssertTrue(BrowserCapabilityPresentation.passkeySummary.contains("separately configured"))
+        XCTAssertTrue(BrowserCapabilityPresentation.addToHomeScreenSummary.contains("source build"))
     }
 
     func testCollapsedChromeLeavesNoHeaderOrFooterRemainder() {

@@ -827,7 +827,7 @@ private struct BrowserPageView: View {
         .alert("Add to Home Screen is unavailable", isPresented: $showingHomeScreenUnavailable) {
             Button("OK", role: .cancel) {}
         } message: {
-            Text("This build could not open the iOS Add to Home Screen action.")
+            Text(BrowserCapabilityPresentation.addToHomeScreenAlert)
         }
     }
 
@@ -2240,15 +2240,27 @@ private struct DrawerBrowserSettingsContent: View {
                 }
 
                 DrawerSubmenuSection("Security") {
-                    if passkeySupport.authorizationStatus == .authorized {
+                    if passkeySupport.authorizationStatus == .disabled {
                         DrawerInfoRow(
-                            title: "Passkeys",
+                            title: BrowserCapabilityPresentation.passkeyTitle,
+                            subtitle: BrowserCapabilityPresentation.passkeyDisabledStatus,
+                            systemImage: "key.fill"
+                        )
+
+                        Text(BrowserCapabilityPresentation.passkeySummary)
+                            .font(.caption)
+                            .foregroundStyle(.secondary)
+                            .fixedSize(horizontal: false, vertical: true)
+                            .padding(.horizontal, 12)
+                    } else if passkeySupport.authorizationStatus == .authorized {
+                        DrawerInfoRow(
+                            title: BrowserCapabilityPresentation.passkeyTitle,
                             subtitle: passkeySupport.statusDescription,
                             systemImage: "key.fill"
                         )
                     } else {
                         DrawerActionRow(
-                            title: "Passkeys",
+                            title: BrowserCapabilityPresentation.passkeyTitle,
                             subtitle: passkeySupport.statusDescription,
                             systemImage: "key.fill"
                         ) {

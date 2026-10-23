@@ -27,7 +27,7 @@ final class BrowserPasskeySupport: ObservableObject {
     var statusDescription: String {
         switch authorizationStatus {
         case .disabled:
-            return "Not enabled in this build"
+            return BrowserCapabilityPresentation.passkeyDisabledStatus
         case .unavailable:
             return "Requires iOS 17.4 or later"
         case .notDetermined:

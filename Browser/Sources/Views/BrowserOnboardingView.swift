@@ -165,23 +165,37 @@ struct BrowserSettingsContentView: View {
             }
 
             Section("Security") {
-                Button {
-                    if passkeySupport.authorizationStatus == .denied {
-                        passkeySupport.openSettings()
-                    } else {
-                        passkeySupport.requestAuthorization()
-                    }
-                } label: {
-                    HStack {
-                        Label("Passkeys", systemImage: "key.fill")
+                if passkeySupport.authorizationStatus == .disabled {
+                    HStack(alignment: .top) {
+                        Label(BrowserCapabilityPresentation.passkeyTitle, systemImage: "key.fill")
                         Spacer()
                         Text(passkeySupport.statusDescription)
                             .font(.caption)
                             .foregroundStyle(.secondary)
                             .multilineTextAlignment(.trailing)
                     }
+                    Text(BrowserCapabilityPresentation.passkeySummary)
+                        .font(.caption)
+                        .foregroundStyle(.secondary)
+                } else {
+                    Button {
+                        if passkeySupport.authorizationStatus == .denied {
+                            passkeySupport.openSettings()
+                        } else {
+                            passkeySupport.requestAuthorization()
+                        }
+                    } label: {
+                        HStack {
+                            Label(BrowserCapabilityPresentation.passkeyTitle, systemImage: "key.fill")
+                            Spacer()
+                            Text(passkeySupport.statusDescription)
+                                .font(.caption)
+                                .foregroundStyle(.secondary)
+                                .multilineTextAlignment(.trailing)
+                        }
+                    }
+                    .disabled(passkeySupport.authorizationStatus == .authorized)
                 }
-                .disabled(passkeySupport.authorizationStatus == .authorized)
             }
 
             Section("Help") {

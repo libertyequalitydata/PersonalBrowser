@@ -51,3 +51,5 @@ Normal foreground browsing and media activity can be summarized locally by site 
 - No migration from another browser installation or guarantee between future source snapshots.
 
 Builders may implement these features in a derivative when they have the necessary authority, privacy design, platform capabilities, and verification. Their presence in another product does not transfer permission or entitlement to this source package.
+
+The app's About page and capability-specific status messages explain these boundaries at the point of use. They also link to Apple's browser requirements and to the maintained commercial Browser edition for people who want to test the end-user product rather than build this source snapshot.

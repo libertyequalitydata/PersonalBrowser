@@ -88,6 +88,8 @@ For device signing and test steps, see [build and signing](docs/BUILD_AND_SIGNIN
 - [Agent startup prompt](docs/AGENT_START_PROMPT.md)
 - [Privacy](PRIVACY.md), [security](SECURITY.md), and [contributing](CONTRIBUTING.md)
 
+The in-app **About** page repeats the source-build capability boundary and links to the continuously maintained commercial Browser website and beta, so people testing a local build can distinguish the two editions without consulting the repository first.
+
 ## Snapshot and license
 
 The [MIT License](LICENSE) permits personal, open-source, and commercial derivatives. Future snapshots may be unrelated code drops with no shared ancestry, API, data migration, or compatibility continuity. There is no publication cadence or promise to release every commercial change. See [snapshot model](SNAPSHOT_MODEL.md) and [snapshot metadata](SNAPSHOT.json).

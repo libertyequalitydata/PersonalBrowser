@@ -19,6 +19,16 @@ ALLOWED_HISTORY = {
         "- **[TestFlight](https://developer.apple.com/testflight/)** is Apple's beta-distribution service. The linked TestFlight build belongs to the commercial app, not to this source repository.",
         "The source is provided without warranty, hosted service, support SLA, or release cadence. Derivatives must not imply endorsement by Prifina, Liberty. Equality. Data., Apple, or supported websites. Product names and commercial identity are not licensed by the MIT source grant.",
     ],
+    "Browser/Sources/Views/BrowserAboutView.swift": [
+        "    static let commercialProductName = \"Browser by Prifina\"",
+        "    static let commercialWebsiteURL = URL(string: \"https://browser.prifina.com/\")!",
+        "    static let commercialBetaURL = URL(string: \"https://testflight.apple.com/join/VZZPdDXA\")!",
+        "                Label(\"Open browser.prifina.com\", systemImage: \"arrow.up.right.square\")",
+    ],
+    "Browser/Tests/ChromeBarsModelTests.swift": [
+        "        XCTAssertEqual(BrowserAboutPresentation.commercialProductName, \"Browser by Prifina\")",
+        "        XCTAssertEqual(BrowserAboutPresentation.commercialWebsiteURL.host, \"browser.prifina.com\")",
+    ],
     "SECURITY.md": ["For the public repository, use GitHub's **Report a vulnerability** action under the Security tab. It creates a private security advisory visible only to the reporter and repository maintainers. Do not post exploit details in a public issue. If GitHub private reporting is temporarily unavailable, email `hello@prifina.com` with the subject `Personal Browser security report` and include the minimum information needed to establish a private follow-up. No response-time or support SLA is promised. Do not include unrelated credentials, browsing data, or personal details in reports. This source snapshot has no hosted backend or managed Apple entitlement."],
     "CODE_OF_CONDUCT.md": ["Harassment, discrimination, threats, or disclosure of private information are not accepted. Maintainers may remove contributions or participation that violate these rules. Send private conduct reports to `hello@prifina.com` with the subject `Personal Browser conduct report`. Include only information relevant to the report and state whether the reporter's identity may be shared during review. Do not disclose conduct reports in public issues. This document creates no guaranteed moderation or response SLA."],
     "PUBLICATION_READINESS.md": ["- Owner authorization: MIT licensing, Prifina and Liberty. Equality. Data. attribution, and public repository publication explicitly approved."],
