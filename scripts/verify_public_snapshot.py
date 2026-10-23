@@ -1,0 +1,108 @@
+#!/usr/bin/env python3
+"""Reproducible source, identity, credential, and privacy boundary checks."""
+import json
+import plistlib
+import re
+import sys
+from pathlib import Path
+
+ROOT = Path(__file__).resolve().parents[1]
+ALLOWED_HISTORY = {
+    "LICENSE": ["Copyright (c) 2026 Prifina Inc. and Liberty. Equality. Data. contributors"],
+    "README.md": [
+        "Personal Browser is an independent, local-first iPhone browser source snapshot periodically derived from the commercial Browser by Prifina. It may not match the current commercial product. This October 2026 snapshot is a separate application with its own bundle identifier, storage, simple artwork, and unsigned build defaults.",
+        "The source is provided without warranty, hosted service, support SLA, or release cadence. Derivatives must not imply endorsement by Prifina, Liberty. Equality. Data., Apple, or supported websites. Product names and commercial identity are not licensed by the MIT source grant.",
+    ],
+    "SNAPSHOT.json": ['  "source_selected": "Browser by Prifina 0.1.0 (78)",'],
+    "SOURCE_PROVENANCE.md": ["This local source snapshot was selected from Browser by Prifina version `0.1.0 (78)` on 2026-10-23. The source input was limited to app sources, tests, resources, supporting files, and project specification. The commercial Xcode project, signing/export records, website configuration, app data, and distribution history were excluded. No commercial Git history was available or reconstructed. Personal Browser starts from a clean source package. The previous commercial physical-device result establishes only why this input was chosen; it is not Personal Browser test evidence. The source and new artwork are offered under the repository MIT notice; commercial names and marks are not licensed as product identity."],
+    "SANITIZATION_REPORT.md": ["The words **Prifina** and **Browser by Prifina** are intentionally retained only in `LICENSE`, `README.md`, `SNAPSHOT.json`, `SOURCE_PROVENANCE.md`, and `SANITIZATION_REPORT.md` for copyright, provenance, or non-endorsement. No commercial domain, team ID, profile, support email, device ID, or storage namespace is allowed. Run `python3 scripts/verify_public_snapshot.py` to reproduce the source checks. The scan passed on 2026-10-23 with six exact historical lines classified."],
+}
+TEXT_SUFFIXES = {".swift", ".md", ".json", ".yml", ".yaml", ".plist", ".xcprivacy", ".svg", ".sh", ".py", ".txt"}
+EXCLUDED_DIRS = {".git", "__pycache__", "PersonalBrowser.xcodeproj"}
+issues = []
+historical = []
+
+def fail(path, line, message):
+    issues.append(f"{path}:{line}: {message}")
+
+patterns = {
+    "owner or organization identity": re.compile(r"ValtoAI|Valto|Digiole", re.I),
+    "commercial identity or storage": re.compile(r"BrowserByPrifina|browserByPrifina|browserbyprifina|(?:[A-Za-z0-9-]+\.)*prifina\.com\b|com\.prifina\b|group\.com\.prifina\b", re.I),
+    "owner path": re.compile(r"/Users/[^/\s]+/"),
+    "credential material": re.compile(r"-----BEGIN (?:RSA |EC |OPENSSH )?PRIVATE KEY-----|\b(?:ghp_|github_pat_|sk-[A-Za-z0-9]{12})|\b(?:api[_-]?key|access[_-]?token|secret[_-]?key|password)\s*[:=]\s*['\"][^'\"]+['\"]", re.I),
+    "device UDID": re.compile(r"\b[0-9a-fA-F]{40}\b|\b[0-9a-fA-F]{8}-[0-9a-fA-F]{16}\b"),
+    "commercial release ID": re.compile(r"3F966NFD22|20261022|Makkaraperunat|App Store Connect|TestFlight|provisioning.profile|\.p8\b", re.I),
+}
+
+for path in sorted(ROOT.rglob("*")):
+    relative = path.relative_to(ROOT).as_posix()
+    if any(part in EXCLUDED_DIRS for part in path.relative_to(ROOT).parts):
+        continue
+    if path.is_dir():
+        if path.name in {"DerivedData", "build"}:
+            fail(relative, 0, "generated build directory")
+        continue
+    if path.suffix in {".ipa", ".xcarchive", ".xcresult", ".mobileprovision", ".p8", ".p12", ".cer", ".key", ".entitlements", ".env", ".pem", ".zip"} or path.name.startswith(".env"):
+        fail(relative, 0, "binary, key, profile, or build artifact")
+    if path.suffix not in TEXT_SUFFIXES and relative not in {"LICENSE", ".gitignore", "Browser/Resources/Assets.xcassets/AppIcon.appiconset/personal-browser-app-icon.png"}:
+        fail(relative, 0, "unreviewed file type")
+    if path.suffix not in TEXT_SUFFIXES and relative not in {"LICENSE", ".gitignore"} or relative == "scripts/verify_public_snapshot.py":
+        continue
+    try:
+        content = path.read_text()
+    except UnicodeDecodeError:
+        fail(relative, 0, "unexpected non-text source")
+        continue
+    for number, line in enumerate(content.splitlines(), 1):
+        for label, pattern in patterns.items():
+            if pattern.search(line):
+                if label == "commercial release ID" and relative == ".gitignore" and line == "*.p8":
+                    continue
+                fail(relative, number, label)
+        if re.search(r"Prifina", line, re.I):
+            if line in ALLOWED_HISTORY.get(relative, []):
+                historical.append(f"{relative}:{number}")
+            else:
+                fail(relative, number, "unclassified commercial name")
+
+project = (ROOT / "project.yml").read_text()
+if "org.libertyequalitydata.personalbrowser" not in project or "CODE_SIGNING_ALLOWED: \"NO\"" not in project:
+    fail("project.yml", 0, "expected independent unsigned app identity missing")
+if "DEVELOPMENT_TEAM" in project or "CODE_SIGN_ENTITLEMENTS" in project or "PROVISIONING_PROFILE" in project:
+    fail("project.yml", 0, "signing or entitlement material present")
+if (ROOT / "Browser/Supporting/Browser.entitlements").exists():
+    fail("Browser/Supporting/Browser.entitlements", 0, "managed entitlement file present")
+
+info = plistlib.loads((ROOT / "Browser/Supporting/Info.plist").read_bytes())
+for key in ("BrowserAddToHomeScreenEnabled", "BrowserPasskeyAuthorizationEnabled"):
+    if info.get(key) is not False:
+        fail("Browser/Supporting/Info.plist", 0, f"{key} must be false")
+if info.get("CFBundleDisplayName") != "Personal Browser":
+    fail("Browser/Supporting/Info.plist", 0, "wrong display name")
+for key in ("NSPhotoLibraryUsageDescription", "NSLocationAlwaysUsageDescription", "NSLocationAlwaysAndWhenInUseUsageDescription", "NSHomeKitUsageDescription", "NSBluetoothAlwaysUsageDescription", "NSHealthShareUsageDescription", "NSHealthUpdateUsageDescription"):
+    if key in info:
+        fail("Browser/Supporting/Info.plist", 0, f"prohibited privacy key: {key}")
+privacy = plistlib.loads((ROOT / "Browser/Resources/PrivacyInfo.xcprivacy").read_bytes())
+if privacy.get("NSPrivacyTracking") is not False or privacy.get("NSPrivacyCollectedDataTypes") != []:
+    fail("Browser/Resources/PrivacyInfo.xcprivacy", 0, "privacy declaration changed")
+if "NSPrivacyTrackingDomains" not in privacy or privacy["NSPrivacyTrackingDomains"] != []:
+    fail("Browser/Resources/PrivacyInfo.xcprivacy", 0, "tracking domains present")
+api_types = privacy.get("NSPrivacyAccessedAPITypes", [])
+if api_types != [{"NSPrivacyAccessedAPIType": "NSPrivacyAccessedAPICategoryUserDefaults", "NSPrivacyAccessedAPITypeReasons": ["CA92.1"]}]:
+    fail("Browser/Resources/PrivacyInfo.xcprivacy", 0, "unexpected accessed API declaration")
+
+required = ["LICENSE", "README.md", "SNAPSHOT_MODEL.md", "SNAPSHOT.json", "PRIVACY.md", "SECURITY.md", "CONTRIBUTING.md", "CODE_OF_CONDUCT.md", "THIRD_PARTY_NOTICES.md", "CHANGELOG.md", "AGENTS.md", ".gitignore", "SOURCE_PROVENANCE.md", "SANITIZATION_REPORT.md", "PUBLICATION_READINESS.md", "docs/BUILD_AND_SIGNING.md", "docs/DEFAULT_BROWSER_ENTITLEMENT.md", "docs/ARCHITECTURE.md", ".github/ISSUE_TEMPLATE/bug_report.md", ".github/ISSUE_TEMPLATE/feature_request.md", ".github/PULL_REQUEST_TEMPLATE.md"]
+for relative in required:
+    if not (ROOT / relative).is_file():
+        fail(relative, 0, "required public package file missing")
+try:
+    json.loads((ROOT / "SNAPSHOT.json").read_text())
+except (ValueError, OSError) as error:
+    fail("SNAPSHOT.json", 0, str(error))
+
+print(f"Scanned source package; {len(historical)} classified historical name uses; {len(issues)} issues")
+for item in historical:
+    print(f"  historical: {item}")
+for item in issues:
+    print(f"  FAIL: {item}")
+sys.exit(1 if issues else 0)

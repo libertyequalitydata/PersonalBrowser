@@ -1,0 +1,14 @@
+*.xcodeproj/
+DerivedData/
+build/
+*.xcarchive
+*.ipa
+*.xcresult
+.DS_Store
+*.mobileprovision
+*.p8
+*.p12
+*.cer
+*.key
+*.env
+xcuserdata/
